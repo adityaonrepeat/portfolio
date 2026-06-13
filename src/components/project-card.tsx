@@ -126,15 +126,24 @@ export function ProjectCard({
         </div>
         {tags && tags.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-auto">
-            {tags.map((tag) => (
-              <Badge
-                key={tag}
-                className="text-[11px] font-medium border border-border h-6 w-fit px-2"
-                variant="outline"
-              >
-                {tag}
-              </Badge>
-            ))}
+            {tags.map((tag) => {
+              const highlighted = tag.startsWith("*");
+              const label = highlighted ? tag.slice(1) : tag;
+              return (
+                <Badge
+                  key={tag}
+                  className={cn(
+                    "text-[11px] font-medium h-6 w-fit px-2",
+                    highlighted
+                      ? "bg-foreground/10 border border-foreground/20 text-foreground"
+                      : "border border-border"
+                  )}
+                  variant="outline"
+                >
+                  {label}
+                </Badge>
+              );
+            })}
           </div>
         )}
       </div>

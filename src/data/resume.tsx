@@ -5,6 +5,13 @@ import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { Nodejs } from "@/components/ui/svgs/nodejs";
 import { Postgresql } from "@/components/ui/svgs/postgresql";
+import { Docker } from "@/components/ui/svgs/docker";
+import { Csharp } from "@/components/ui/svgs/csharp";
+import { MongoDB } from "@/components/ui/svgs/mongodb";
+import { Prisma } from "@/components/ui/svgs/prisma";
+import { SocketIO } from "@/components/ui/svgs/socketio";
+import { Redis } from "@/components/ui/svgs/redis";
+import { Tailwind } from "@/components/ui/svgs/tailwind";
 
 export const DATA = {
   name: "Aditya Kumar Singh",
@@ -13,16 +20,23 @@ export const DATA = {
   location: "India",
   locationLink: "https://www.google.com/maps/place/india",
   description:
-    "Student & builder. I love creating things that matter.",
+    "Full Stack Developer · AI · Building things that ship.",
   summary:
-    "I'm a prefinal year undergrad at NIT Agartala building products at the intersection of AI and the web. Currently working on AI safety research and helping others learn to code. I love shipping projects that solve real problems.",
-  avatarUrl: "",
+    "I'm a Full Stack Developer building products at the intersection of AI and the web. I've shipped projects ranging from social platforms to campus marketplaces to scam detection tools. Currently interning at the National Informatics Centre. I care about shipping fast and building things that actually matter.",
+  avatarUrl: "/profile-portfolio.jpg",
   skills: [
     { name: "React", icon: ReactLight },
     { name: "Next.js", icon: NextjsIconDark },
     { name: "TypeScript", icon: Typescript },
     { name: "Node.js", icon: Nodejs },
     { name: "PostgreSQL", icon: Postgresql },
+    { name: "Docker", icon: Docker },
+    { name: "C++", icon: Csharp },
+    { name: "MongoDB", icon: MongoDB },
+    { name: "Prisma", icon: Prisma },
+    { name: "Socket.IO", icon: SocketIO },
+    { name: "Redis", icon: Redis },
+    { name: "TailwindCSS", icon: Tailwind },
   ],
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
@@ -95,14 +109,17 @@ export const DATA = {
       dates: "",
       active: true,
       description:
-        "A social networking platform for developers and creators to share ideas, connect, and grow together.",
+        "A mental wellness platform that matches people into anonymous video chats by emotion, with an AI therapist, journaling, and mood tracking.",
       technologies: [
         "Next.js",
         "TypeScript",
         "PostgreSQL",
         "Prisma",
-        "TailwindCSS",
-        "Shadcn UI",
+        "*Socket.IO",
+        "Gemini AI",
+        "*Redis",
+        "Betterauth",
+        "Rate Limiting",
       ],
       links: [
         {
@@ -121,20 +138,28 @@ export const DATA = {
     },
     {
       title: "Campuskart",
-      href: "",
+      href: "https://campuskart-net.vercel.app",
       dates: "",
       active: true,
       description:
-        "A marketplace platform built for college students to buy and sell items within their campus community.",
+        "Campus-isolated marketplace with role-based access (user / college moderator / admin), real-time messaging, and dual-layer content moderation.",
       technologies: [
         "Next.js",
         "TypeScript",
         "PostgreSQL",
         "Prisma",
-        "TailwindCSS",
-        "Shadcn UI",
+        "*Socket.IO",
+        "Zustand",
+        "*Sightengine",
+        "Better-auth",
+        "Rate Limiting",
       ],
       links: [
+        {
+          type: "Website",
+          href: "https://campuskart-net.vercel.app",
+          icon: <Icons.globe className="size-3" />,
+        },
         {
           type: "Source",
           href: "https://github.com/adityaonrepeat/campuskart",
@@ -150,8 +175,16 @@ export const DATA = {
       dates: "",
       active: true,
       description:
-        "A tool to help users identify and protect themselves from online scams and phishing attempts.",
-      technologies: [],
+        "Chrome extension that detects phishing sites in real-time using a TensorFlow.js model running entirely on your device. Trained on **291k+** urls with **88%** accuracy.",
+      technologies: [
+        "*TensorFlow.js",
+        "ML",
+        "Chrome Extension",
+        "TypeScript",
+        "Cybersecurity",
+        "*On-device AI",
+        "Real-time Detection",
+      ],
       links: [
         {
           type: "Source",
