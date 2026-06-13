@@ -20,7 +20,7 @@ export const DATA = {
   location: "India",
   locationLink: "https://www.google.com/maps/place/india",
   description:
-    "Full Stack Developer · AI · Building things that ship.",
+    "Full Stack Developer · AI · Building things that matter.",
   summary:
     "I'm a Full Stack Developer building products at the intersection of AI and the web. I've shipped projects ranging from social platforms to campus marketplaces to scam detection tools. Currently interning at the National Informatics Centre. I care about shipping fast and building things that actually matter.",
   avatarUrl: "/profile-portfolio.jpg",
