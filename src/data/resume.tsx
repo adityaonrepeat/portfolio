@@ -15,7 +15,7 @@ export const DATA = {
   description:
     "Student & builder. I love creating things that matter.",
   summary:
-    "I'm a Computer Science student at NIT Agartala building products at the intersection of AI and the web. Currently working on AI safety research and helping others learn to code. I love shipping projects that solve real problems.",
+    "I'm a prefinal year undergrad at NIT Agartala building products at the intersection of AI and the web. Currently working on AI safety research and helping others learn to code. I love shipping projects that solve real problems.",
   avatarUrl: "",
   skills: [
     { name: "React", icon: ReactLight },
