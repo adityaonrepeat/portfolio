@@ -82,7 +82,7 @@ export const DATA = {
     {
       school: "National Institute of Technology, Agartala",
       href: "https://nita.ac.in",
-      degree: "Bachelor of Technology in Computer Science & Engineering",
+      degree: "Bachelor of Technology",
       logoUrl: "/nit-agartala.png",
       start: "2023",
       end: "2027",
