@@ -113,13 +113,13 @@ export const DATA = {
       technologies: [
         "Next.js",
         "TypeScript",
-        "PostgreSQL",
-        "Prisma",
         "*Socket.IO",
+        "Prisma",
+        "PostgreSQL",
         "Gemini AI",
         "*Redis",
         "Betterauth",
-        "Rate Limiting",
+        "*Rate Limiting",
       ],
       links: [
         {
@@ -132,6 +132,14 @@ export const DATA = {
           href: "https://github.com/adityaonrepeat/bloom-v2",
           icon: <Icons.github className="size-3" />,
         },
+      ],
+      details: [
+        "A mental wellness platform serving **100+ users** that matches people into anonymous, emotion-based peer video calls, with an AI therapist, journaling, and mood tracking.",
+        "Built a real-time matchmaking server (Socket.IO + Redis) pairing users across 4 emotion queues with **sub-second match times**, skip/rematch cooldowns, and atomic re-queueing handling **50+ concurrent sockets** in load testing.",
+        "Implemented a streaming AI therapist (Gemini, SSE) with prompts grounded in each user's emotional state and last 10 messages, cutting time-to-first-token to **under 1s** via token streaming.",
+        "Designed a session-based chat architecture (Prisma + PostgreSQL) with optimistic UI via TanStack Query, persisting full conversation history across sessions.",
+        "Secured **15+ API routes** with authenticated access (better-auth, email/OAuth) and Redis-backed **rate limiting**, plus a peer-moderation pipeline with **auto-blocking** at a configurable report threshold.",
+        "Architected as 2 independent services (Next.js + standalone realtime server) deployed across Vercel and Render.",
       ],
       image: "/bloom.png",
       video: "",
@@ -152,7 +160,7 @@ export const DATA = {
         "Zustand",
         "*Sightengine",
         "Better-auth",
-        "Rate Limiting",
+        "*Rate Limiting",
       ],
       links: [
         {
@@ -165,6 +173,12 @@ export const DATA = {
           href: "https://github.com/adityaonrepeat/campuskart",
           icon: <Icons.github className="size-3" />,
         },
+      ],
+      details: [
+        "A college-exclusive marketplace serving **100+ users** across **5+ institutions** with P2P listings, a campus store directory, and **real-time** chat — all isolated per campus.",
+        "Designed per-college data isolation with a **3-tier RBAC** system (user / **college-scoped** moderator / global admin) enforced on every server action, restricting moderators to their own institution.",
+        "Built a dedicated Socket.IO server handling **real-time** messaging, typing indicators, and online presence across **50+ concurrent sockets**, architected as **2 independent services** deployed across Vercel and Render.",
+        "Integrated Sightengine AI image moderation (synchronous, **blocks before DB insert**), text filtering, and Upstash Redis rate limiting; optimized unread-count queries from **O(n) → O(1)** with a single grouped SQL, and added cursor pagination supporting **200+ listings**.",
       ],
       image: "/campuskart.png",
       video: "",
@@ -183,7 +197,7 @@ export const DATA = {
         "TypeScript",
         "Cybersecurity",
         "*On-device AI",
-        "Real-time Detection",
+        "*Real-time Detection",
       ],
       links: [
         {
@@ -191,6 +205,13 @@ export const DATA = {
           href: "https://github.com/adityaonrepeat/scamshield",
           icon: <Icons.github className="size-3" />,
         },
+      ],
+      details: [
+        "Privacy-first Chrome extension detecting phishing sites using on-device TensorFlow.js.",
+        "Trained a TensorFlow.js model on **291k+ URLs** achieving **88.47%** test accuracy; extracts and min-max scales 16 URL features for fully in-browser inference with **zero server dependency**.",
+        "Engineered a blended risk scoring system (**30% heuristic + 70% ML**) with independent escalation rules — strong heuristic signals (≥ 70) and high ML confidence (≥ 90%) each escalate to red independently, reducing false negatives on high-confidence threats.",
+        "Implemented **homograph attack detection** via Punycode prefix checks and Cyrillic confusable character matching, catching IDN spoofing attacks that bypass standard URL pattern filters.",
+        "Injected extension UI via **Shadow DOM** to prevent style conflicts across all sites; cached per-tab results in chrome.storage.local via a background service worker for instant popup response.",
       ],
       image: "/scamshield.png",
       video: "",

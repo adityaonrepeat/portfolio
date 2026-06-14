@@ -3,7 +3,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import Markdown from "react-markdown";
@@ -39,6 +39,7 @@ interface Props {
     type: string;
     href: string;
   }[];
+  details?: readonly string[];
   className?: string;
 }
 
@@ -52,12 +53,14 @@ export function ProjectCard({
   image,
   video,
   links,
+  details,
   className,
 }: Props) {
+  const [showDetails, setShowDetails] = useState(false);
   return (
     <div
       className={cn(
-        "flex flex-col h-full border border-border rounded-xl overflow-hidden hover:ring-2 cursor-pointer hover:ring-muted transition-all duration-200",
+        "flex flex-col border border-border rounded-xl overflow-hidden hover:ring-2 cursor-pointer hover:ring-muted transition-all duration-200",
         className
       )}
     >
@@ -124,6 +127,31 @@ export function ProjectCard({
         <div className="text-xs flex-1 prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
           <Markdown>{description}</Markdown>
         </div>
+        {details && details.length > 0 && (
+          <div className="border-t border-border pt-3">
+            <button
+              onClick={() => setShowDetails(!showDetails)}
+              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ChevronDown
+                className={cn("h-3 w-3 transition-transform duration-200", showDetails && "rotate-180")}
+              />
+              {showDetails ? "Hide details" : "Show details"}
+            </button>
+            {showDetails && (
+              <ul className="mt-3 space-y-2">
+                {details.map((item, i) => (
+                  <li key={i} className="flex gap-2 text-xs text-muted-foreground">
+                    <span className="mt-0.75 shrink-0 text-foreground/70 leading-none">•</span>
+                    <div className="text-xs max-w-full leading-relaxed [&>p]:m-0 [&_strong]:text-foreground [&_strong]:font-semibold">
+                      <Markdown>{item}</Markdown>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
         {tags && tags.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-auto">
             {tags.map((tag) => {
