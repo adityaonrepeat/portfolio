@@ -3,9 +3,10 @@
 
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown, X, Sun, Moon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Markdown from "react-markdown";
 
 function ProjectImage({ src, alt }: { src: string; alt: string }) {
@@ -40,6 +41,7 @@ interface Props {
     href: string;
   }[];
   details?: readonly string[];
+  systemDesign?: string;
   className?: string;
 }
 
@@ -54,10 +56,23 @@ export function ProjectCard({
   video,
   links,
   details,
+  systemDesign,
   className,
 }: Props) {
   const [showDetails, setShowDetails] = useState(false);
+  const [showDiagram, setShowDiagram] = useState(false);
+  const [diagramDark, setDiagramDark] = useState(true);
+
+  useEffect(() => {
+    if (!showDiagram) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowDiagram(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [showDiagram]);
   return (
+    <>
     <div
       className={cn(
         "flex flex-col border border-border rounded-xl overflow-hidden hover:ring-2 cursor-pointer hover:ring-muted transition-all duration-200",
@@ -127,17 +142,30 @@ export function ProjectCard({
         <div className="text-xs flex-1 prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
           <Markdown>{description}</Markdown>
         </div>
-        {details && details.length > 0 && (
+        {(details && details.length > 0 || systemDesign) && (
           <div className="border-t border-border pt-3">
-            <button
-              onClick={() => setShowDetails(!showDetails)}
-              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ChevronDown
-                className={cn("h-3 w-3 transition-transform duration-200", showDetails && "rotate-180")}
-              />
-              {showDetails ? "Hide details" : "Show details"}
-            </button>
+            <div className="flex items-center justify-between">
+              {details && details.length > 0 ? (
+                <button
+                  onClick={() => setShowDetails(!showDetails)}
+                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <ChevronDown
+                    className={cn("h-3 w-3 transition-transform duration-200", showDetails && "rotate-180")}
+                  />
+                  {showDetails ? "Hide details" : "Show details"}
+                </button>
+              ) : <span />}
+              {systemDesign && (
+                <button
+                  onClick={() => setShowDiagram(true)}
+                  className="flex items-center gap-0.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  System Design
+                  <ArrowUpRight className="h-3 w-3" />
+                </button>
+              )}
+            </div>
             {showDetails && (
               <ul className="mt-3 space-y-2">
                 {details.map((item, i) => (
@@ -176,5 +204,36 @@ export function ProjectCard({
         )}
       </div>
     </div>
+
+    {showDiagram && systemDesign && createPortal(
+      <div
+        className="fixed inset-0 z-9999 bg-black flex items-center justify-center"
+        onClick={() => setShowDiagram(false)}
+      >
+        <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+          <button
+            onClick={(e) => { e.stopPropagation(); setDiagramDark(!diagramDark); }}
+            className="flex items-center gap-1.5 text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-md transition-colors"
+          >
+            {diagramDark ? <Sun className="h-3 w-3" /> : <Moon className="h-3 w-3" />}
+            {diagramDark ? "Light" : "Dark"}
+          </button>
+          <button
+            onClick={() => setShowDiagram(false)}
+            className="text-white/70 hover:text-white transition-colors bg-white/10 hover:bg-white/20 p-1.5 rounded-md"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+        <img
+          src={`/${systemDesign}-${diagramDark ? "dark" : "light"}-sd.png`}
+          alt={`${title} system design`}
+          className="max-h-screen max-w-full w-full h-full object-contain"
+          onClick={(e) => e.stopPropagation()}
+        />
+      </div>,
+      document.body
+    )}
+    </>
   );
 }

@@ -49,6 +49,7 @@ export default function ProjectsSection() {
                                 video={project.video}
                                 links={project.links}
                                 details={"details" in project ? project.details : undefined}
+                                systemDesign={"systemDesign" in project ? project.systemDesign : undefined}
                             />
                         </BlurFade>
                     ))}

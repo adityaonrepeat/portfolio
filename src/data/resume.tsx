@@ -12,6 +12,7 @@ import { Prisma } from "@/components/ui/svgs/prisma";
 import { SocketIO } from "@/components/ui/svgs/socketio";
 import { Redis } from "@/components/ui/svgs/redis";
 import { Tailwind } from "@/components/ui/svgs/tailwind";
+import { Zustand } from "@/components/ui/svgs/zustand";
 
 export const DATA = {
   name: "Aditya Kumar Singh",
@@ -37,6 +38,7 @@ export const DATA = {
     { name: "Socket.IO", icon: SocketIO },
     { name: "Redis", icon: Redis },
     { name: "TailwindCSS", icon: Tailwind },
+    { name: "Zustand", icon: Zustand },
   ],
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
@@ -143,6 +145,7 @@ export const DATA = {
       ],
       image: "/bloom.png",
       video: "",
+      systemDesign: "bloom",
     },
     {
       title: "Campuskart",
@@ -182,6 +185,7 @@ export const DATA = {
       ],
       image: "/campuskart.png",
       video: "",
+      systemDesign: "campuskart",
     },
     {
       title: "Scamshield",
@@ -215,6 +219,7 @@ export const DATA = {
       ],
       image: "/scamshield.png",
       video: "",
+      systemDesign: "scamshield",
     },
   ],
   hackathons: [],
