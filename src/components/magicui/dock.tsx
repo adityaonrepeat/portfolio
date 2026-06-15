@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion, type MotionValue, useMotionValue, useSpring, useTransform } from "motion/react";
-import { createContext, useContext, useRef, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, type ReactNode } from "react";
 
 interface DockProps {
   className?: string;
@@ -33,6 +33,12 @@ const DockContext = createContext<DockContextValue | null>(null);
 
 const Dock = ({ className, children, magnification = DEFAULT_MAGNIFICATION, distance = DEFAULT_DISTANCE }: DockProps) => {
   const mouseX = useMotionValue(Infinity);
+
+  useEffect(() => {
+    const reset = () => mouseX.set(Infinity);
+    window.addEventListener("blur", reset);
+    return () => window.removeEventListener("blur", reset);
+  }, [mouseX]);
 
   return (
     <DockContext.Provider value={{ mouseX, magnification, distance }}>
