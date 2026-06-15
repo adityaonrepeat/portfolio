@@ -166,7 +166,7 @@ export function ProjectCard({
                 </button>
               )}
             </div>
-            {showDetails && (
+            {showDetails && details && (
               <ul className="mt-3 space-y-2">
                 {details.map((item, i) => (
                   <li key={i} className="flex gap-2 text-xs text-muted-foreground">
