@@ -183,13 +183,13 @@ export const DATA = {
         "Built a dedicated Socket.IO server handling **real-time** messaging, typing indicators, and online presence across **50+ concurrent sockets**, architected as **2 independent services** deployed across Vercel and Render.",
         "Integrated Sightengine AI image moderation (synchronous, **blocks before DB insert**), text filtering, and Upstash Redis rate limiting; optimized unread-count queries from **O(n) → O(1)** with a single grouped SQL, and added cursor pagination supporting **200+ listings**.",
       ],
-      image: "/campuskart.png",
+      image: "/campuskart-banner.png",
       video: "",
       systemDesign: "campuskart",
     },
     {
       title: "Scamshield",
-      href: "",
+      href: "https://github.com/adityaonrepeat/scamshield",
       dates: "",
       active: true,
       description:
