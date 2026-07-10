@@ -90,7 +90,7 @@ export const DATA = {
       title: "Full Stack Developer Intern",
       logoUrl: "/NIC.png",
       start: "May 2026",
-      end: "Present",
+      end: "June 2026",
       description: "",
     },
   ],
