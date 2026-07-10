@@ -3,9 +3,9 @@
 
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, ChevronDown, X, Sun, Moon } from "lucide-react";
+import { ArrowUpRight, ChevronDown, X, Sun, Moon, Video } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Markdown from "react-markdown";
 
@@ -26,6 +26,49 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+function ProjectVideo({ src, poster }: { src: string; poster?: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const vid = ref.current;
+    if (!vid) return;
+    let timer: ReturnType<typeof setTimeout>;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          timer = setTimeout(() => vid.play().catch(() => {}), 2500);
+        } else {
+          clearTimeout(timer);
+          vid.pause();
+          if (vid.currentTime > 0) {
+            vid.currentTime = 0;
+            vid.load();
+          }
+        }
+      },
+      { rootMargin: "-35% 0px -35% 0px", threshold: 0 }
+    );
+    observer.observe(vid);
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      loop
+      muted
+      playsInline
+      preload="metadata"
+      className="w-full h-48 object-cover"
+    />
+  );
+}
+
 interface Props {
   title: string;
   href?: string;
@@ -35,6 +78,7 @@ interface Props {
   link?: string;
   image?: string;
   video?: string;
+  demoVideo?: string;
   links?: readonly {
     icon: React.ReactNode;
     type: string;
@@ -54,6 +98,7 @@ export function ProjectCard({
   link,
   image,
   video,
+  demoVideo,
   links,
   details,
   systemDesign,
@@ -61,6 +106,7 @@ export function ProjectCard({
 }: Props) {
   const [showDetails, setShowDetails] = useState(false);
   const [showDiagram, setShowDiagram] = useState(false);
+  const [showDemo, setShowDemo] = useState(false);
   const [diagramDark, setDiagramDark] = useState(true);
 
   useEffect(() => {
@@ -71,6 +117,15 @@ export function ProjectCard({
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [showDiagram]);
+
+  useEffect(() => {
+    if (!showDemo) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowDemo(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [showDemo]);
   return (
     <>
     <div
@@ -80,27 +135,37 @@ export function ProjectCard({
       )}
     >
       <div className="relative shrink-0">
-        <Link
-          href={href || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block"
-        >
-          {video ? (
-            <video
-              src={video}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-48 object-cover"
-            />
-          ) : image ? (
-            <ProjectImage src={image} alt={title} />
-          ) : (
-            <div className="w-full h-48 bg-muted" />
-          )}
-        </Link>
+        {demoVideo ? (
+          <button
+            type="button"
+            onClick={() => setShowDemo(true)}
+            aria-label={`Play ${title} demo`}
+            className="block w-full cursor-pointer"
+          >
+            {video ? (
+              <ProjectVideo src={video} poster={image} />
+            ) : image ? (
+              <ProjectImage src={image} alt={title} />
+            ) : (
+              <div className="w-full h-48 bg-muted" />
+            )}
+          </button>
+        ) : (
+          <Link
+            href={href || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
+            {video ? (
+              <ProjectVideo src={video} poster={image} />
+            ) : image ? (
+              <ProjectImage src={image} alt={title} />
+            ) : (
+              <div className="w-full h-48 bg-muted" />
+            )}
+          </Link>
+        )}
         {links && links.length > 0 && (
           <div className="absolute top-2 right-2 flex flex-wrap gap-2">
             {links.map((link, idx) => (
@@ -124,28 +189,40 @@ export function ProjectCard({
         )}
       </div>
       <div className="p-6 flex flex-col gap-3 flex-1">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-baseline justify-between gap-2">
             <Link
               href={href || "#"}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="font-semibold hover:underline"
+              className="flex items-center gap-1 font-semibold hover:underline"
             >
               {title}
+              <ArrowUpRight className="h-4 w-4" aria-hidden />
             </Link>
-            <time className="text-xs text-muted-foreground">{dates}</time>
+            {demoVideo ? (
+              <button
+                onClick={() => setShowDemo(true)}
+                className="flex items-center gap-1 shrink-0 font-semibold hover:underline"
+                aria-label={`Watch ${title} demo`}
+              >
+                Demo
+                <Video className="h-4 w-4" aria-hidden />
+              </button>
+            ) : (
+              <Link
+                href={href || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                aria-label={`Open ${title}`}
+              >
+                <ArrowUpRight className="h-4 w-4" aria-hidden />
+              </Link>
+            )}
           </div>
-          <Link
-            href={href || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
-            aria-label={`Open ${title}`}
-          >
-            <ArrowUpRight className="h-4 w-4" aria-hidden />
-          </Link>
+          <time className="text-xs text-muted-foreground">{dates}</time>
         </div>
         <div className="text-xs flex-1 prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
           <Markdown>{description}</Markdown>
@@ -237,6 +314,30 @@ export function ProjectCard({
           src={`/${systemDesign}-${diagramDark ? "dark" : "light"}-sd.png`}
           alt={`${title} system design`}
           className="max-h-screen max-w-full w-full h-full object-contain"
+          onClick={(e) => e.stopPropagation()}
+        />
+      </div>,
+      document.body
+    )}
+
+    {showDemo && demoVideo && createPortal(
+      <div
+        className="fixed inset-0 z-9999 flex items-center justify-center bg-black/90 p-4"
+        onClick={() => setShowDemo(false)}
+      >
+        <button
+          onClick={() => setShowDemo(false)}
+          className="absolute top-4 right-4 z-10 rounded-md bg-white/10 p-1.5 text-white/70 transition-colors hover:bg-white/20 hover:text-white"
+          aria-label="Close demo"
+        >
+          <X className="h-4 w-4" />
+        </button>
+        <video
+          src={demoVideo}
+          controls
+          autoPlay
+          playsInline
+          className="max-h-[90vh] w-auto max-w-full rounded-lg"
           onClick={(e) => e.stopPropagation()}
         />
       </div>,

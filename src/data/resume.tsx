@@ -111,7 +111,7 @@ export const DATA = {
       dates: "",
       active: true,
       description:
-        "A mental wellness platform that matches people into anonymous video chats by emotion, with an AI therapist, journaling, and mood tracking.",
+        "A mental wellness platform matching **100+ users** into anonymous, emotion-based peer video chats, with an AI therapist, journaling, and mood tracking.",
       technologies: [
         "Next.js",
         "TypeScript",
@@ -144,7 +144,10 @@ export const DATA = {
         "Architected as 2 independent services (Next.js + standalone realtime server) deployed across Vercel and Render.",
       ],
       image: "/bloom.png",
-      video: "",
+      video:
+        "https://res.cloudinary.com/wgf97tnb/video/upload/w_640,q_auto,f_auto/v1783637201/bloom_cloudinary_1_gg6xvh.mp4",
+      demoVideo:
+        "https://res.cloudinary.com/wgf97tnb/video/upload/v1783637201/bloom_cloudinary_1_gg6xvh.mp4",
       systemDesign: "bloom",
     },
     {
@@ -153,7 +156,7 @@ export const DATA = {
       dates: "",
       active: true,
       description:
-        "Campus-isolated marketplace with role-based access (user / college moderator / admin), real-time messaging, and dual-layer content moderation.",
+        "Campus-isolated marketplace serving **100+ users** with role-based access (user / college moderator / admin), real-time messaging, and dual-layer content moderation.",
       technologies: [
         "Next.js",
         "TypeScript",
@@ -184,7 +187,10 @@ export const DATA = {
         "Integrated Sightengine AI image moderation (synchronous, **blocks before DB insert**), text filtering, and Upstash Redis rate limiting; optimized unread-count queries from **O(n) → O(1)** with a single grouped SQL, and added cursor pagination supporting **200+ listings**.",
       ],
       image: "/campuskart-banner.png",
-      video: "",
+      video:
+        "https://res.cloudinary.com/wgf97tnb/video/upload/w_640,q_auto,f_auto/v1783637538/campuskart_cloudinary_2_ljym91.mp4",
+      demoVideo:
+        "https://res.cloudinary.com/wgf97tnb/video/upload/v1783637538/campuskart_cloudinary_2_ljym91.mp4",
       systemDesign: "campuskart",
     },
     {
@@ -218,7 +224,10 @@ export const DATA = {
         "Injected extension UI via **Shadow DOM** to prevent style conflicts across all sites; cached per-tab results in chrome.storage.local via a background service worker for instant popup response.",
       ],
       image: "/scamshield.png",
-      video: "",
+      video:
+        "https://res.cloudinary.com/wgf97tnb/video/upload/w_640,q_auto,f_auto/v1783637612/Scamshield_Final_Demo_a4mkws.mp4",
+      demoVideo:
+        "https://res.cloudinary.com/wgf97tnb/video/upload/v1783637612/Scamshield_Final_Demo_a4mkws.mp4",
       systemDesign: "scamshield",
     },
   ],

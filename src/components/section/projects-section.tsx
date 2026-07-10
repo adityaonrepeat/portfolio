@@ -47,6 +47,7 @@ export default function ProjectsSection() {
                                 tags={project.technologies}
                                 image={project.image}
                                 video={project.video}
+                                demoVideo={"demoVideo" in project ? project.demoVideo : undefined}
                                 links={project.links}
                                 details={"details" in project ? project.details : undefined}
                                 systemDesign={"systemDesign" in project ? project.systemDesign : undefined}
