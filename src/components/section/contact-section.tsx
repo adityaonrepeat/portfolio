@@ -4,7 +4,7 @@ import { DATA } from "@/data/resume";
 export default function ContactSection() {
   return (
     <div className="border rounded-xl p-10 relative">
-      <div className="absolute -top-4 border bg-primary z-10 rounded-xl px-4 py-1 left-1/2 -translate-x-1/2">
+      <div className="absolute -top-4 border bg-primary z-10 rounded-xl px-4 py-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
         <span className="text-background text-sm font-medium">Freelance & Collaboration</span>
       </div>
       <div className="flex flex-col items-center gap-4 text-center">
@@ -22,7 +22,7 @@ export default function ContactSection() {
           >
             Twitter
           </Link>{" "}
-          or send me an email — I&apos;ll get back to you.
+          or send me an email, I&apos;ll get back to you.
         </p>
         <div className="flex gap-3 flex-wrap justify-center">
           <Link
