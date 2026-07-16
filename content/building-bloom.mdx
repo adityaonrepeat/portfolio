@@ -1,0 +1,89 @@
+---
+title: "Building Bloom: realtime matchmaking for mental wellness"
+publishedAt: "2026-07-17"
+author: "Aditya Kumar Singh"
+summary: "How I architected emotion based peer video matching, a streaming AI therapist, and the race conditions I had to think through to make them reliable."
+image: "/bloom.png"
+---
+
+Bloom matches 100+ users into anonymous peer video calls by emotional state: anxious talks to anxious, calm to calm. Not random. Not an AI. Someone in the same moment. Alongside it sits a streaming AI therapist, private journaling, and mood tracking.
+
+**[Live](https://bloom-net.vercel.app/)** and **[GitHub](https://github.com/adityaonrepeat/bloom-v2)**. Built with Next.js, Socket.IO, Upstash Redis, Gemini 2.5 Flash, PostgreSQL with Prisma, ZegoCloud, and better-auth.
+
+{/* Replace /bloom.png with a real screenshot of the Talk screen if you have one */}
+<MediaContainer src="/bloom.png" alt="Bloom app, the Talk screen" />
+
+## The problem I wanted to solve
+
+Most mental wellness apps are asynchronous: you write something, an AI responds, you close the tab. That model works, but it misses the feeling of being heard by another person in realtime.
+
+A 10 question check in scores mood from 0 to 50 and maps it to one of four emotion tags (happy, calm, stressed, anxious), and that tag decides who you talk to. The AI therapist, journaling, and mood tracking are there too, but the interesting engineering problem is the video matching, so that is what this post is about.
+
+## Architecture: why two services?
+
+I wanted to run the web app on Vercel: serverless, zero ops, instant deploys. But serverless functions are stateless and short lived, and a WebSocket connection needs to stay open for minutes. That is a direct conflict.
+
+> You cannot hold a Socket.IO connection open inside a serverless function. The invocation ends, the connection dies.
+
+So I split into two independent services: a stateless Next.js app (Vercel) for auth, API routes, and AI chat, and a persistent Node process (Render) for all WebSocket traffic. They share nothing except a Postgres user ID passed from the browser.
+
+<MediaContainer src="/bloom-dark-sd.png" alt="Bloom system design: emotion queues, matching, and the two service split" />
+
+## How matching works
+
+The quiz assigns an emotion and the user drops into a Redis backed queue for it. A queue manager looks for someone in the same queue, and if nobody is there it falls back to a cross emotion queue rather than leaving the user waiting. Before a pairing is confirmed it checks the previous partner cooldown, allocates a room, and hands the two sockets to Socket.IO, which opens a ZegoCloud video session. On skip, both users cool down, get blocked from an instant rematch, and return to the queues.
+
+## The hard problems
+
+### 1. Race conditions in the match queue
+
+The matchmaking logic pops candidates from a Redis list and tries to pair them. The naive version has two bugs.
+
+**Double pop:** when no partner is found, the code pushes the candidate back and keeps looping. Using `continue` after pushing back re pops the same socket immediately, potentially rematching two people who just skipped each other in a single tick, bypassing the cooldown. The fix is to always `break` after a failed attempt.
+
+```ts
+// Wrong: continue pops the same socket again immediately
+if (!isValidCandidate(candidate)) {
+  await redis.lpush(queue, candidate);
+  continue; // loops back, pops them again, bypasses cooldown
+}
+
+// Right: break exits, processQueues reruns cleanly next event
+if (!isValidCandidate(candidate)) {
+  await redis.lpush(queue, candidate);
+  break;
+}
+```
+
+**Ghost sockets:** a user can disconnect between being queued and being popped. Their socket ID sits in Redis but the connection is gone. Before accepting any candidate, `processQueues` checks that the socket is still connected and not already in a room, silently discarding stale entries.
+
+### 2. Atomic skip
+
+When a user hits Skip, both parties need to leave the room and rejoin the queue at the same time. Do it sequentially and there is a window where one user is out of the room but not yet in any queue, effectively lost.
+
+```ts
+// Both users requeued before either gets a new match
+await Promise.all([
+  requeueUser(socket1, emotion1),
+  requeueUser(socket2, emotion2),
+]);
+setTimeout(() => processQueues(), 300);
+```
+
+The 300ms delay gives ZegoCloud time to tear down the video room cleanly. Without it, users occasionally get matched into a room that has not fully closed.
+
+### 3. Cooldowns
+
+A skip cooldown (3s, Redis TTL key) rate limits how often a user can skip. A rematch cooldown (4s) stops the same two people from being paired again instantly. The 4 over 3 ordering is intentional: the rematch cooldown must outlast the skip cooldown, or a user could be eligible to rematch a previous partner before the skip has fully resolved, a contradiction in the state machine.
+
+### 4. Streaming AI over SSE
+
+Aastha streams token by token via Server Sent Events, not WebSockets. AI streaming flows one way, server to client, so SSE fits: it works natively with Next.js route handlers and avoids a second long lived connection next to the matchmaking socket. The route loads the last 10 messages and the current emotional tag, builds a grounded prompt, then streams Gemini tokens as `data: {"token": "..."}` frames. TanStack Query drives the optimistic UI, and the cache commits on the `done` frame.
+
+### 5. Cold start login bounce
+
+Middleware protects routes by calling `/api/auth/get-session`. On Vercel both can cold start at once, the fetch times out before the route is warm, and authenticated users get bounced to `/login` on first load. The fix has two layers: a 4 second `AbortController` timeout on the session fetch, and a cookie presence fallback that checks for the `better-auth.session_token` cookie when the fetch times out. A valid cookie almost certainly means a valid session, and at worst the next API call catches an expired token.
+
+## What I would change at scale
+
+The realtime server is a single Node process today. If it restarts, active rooms drop, and two instances cannot run behind a load balancer because a user on instance A cannot match with a user on instance B: same Redis queues, different in memory worlds. The path forward is the Socket.IO Redis adapter for pub/sub across instances, in memory maps moved to Redis hashes, and dedicated matcher workers using `BLPOP` or Lua scripts instead of the per event sweep. At current scale none of that is warranted, but it is the roadmap.
