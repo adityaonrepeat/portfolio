@@ -83,11 +83,22 @@ export const DATA = {
 
   work: [
     {
+      company: "Jarurat Care Foundation",
+      href: "https://jarurat.care",
+      badges: [],
+      location: "Remote",
+      title: "Full Stack Developer Intern",
+      logoUrl: "/jarurat.png",
+      start: "July 2026",
+      end: undefined,
+      description: "",
+    },
+    {
       company: "National Informatics Centre",
       href: "https://nic.in",
       badges: [],
       location: "Remote",
-      title: "Full Stack Developer Intern",
+      title: "Backend Development Intern",
       logoUrl: "/NIC.png",
       start: "May 2026",
       end: "June 2026",
