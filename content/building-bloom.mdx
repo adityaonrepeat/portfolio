@@ -10,12 +10,20 @@ Bloom matches 100+ users into anonymous peer video calls by emotional state: anx
 
 **[Live](https://bloom-net.vercel.app/)** and **[GitHub](https://github.com/adityaonrepeat/bloom-v2)**. Built with Next.js, Socket.IO, Upstash Redis, Gemini 2.5 Flash, PostgreSQL with Prisma, ZegoCloud, and better-auth.
 
-{/* Replace /bloom.png with a real screenshot of the Talk screen if you have one */}
-<MediaContainer src="/bloom.png" alt="Bloom app, the Talk screen" />
+<MediaContainer
+  type="video"
+  src="https://res.cloudinary.com/wgf97tnb/video/upload/v1783637201/bloom_cloudinary_1_gg6xvh.mp4"
+  fit="contain"
+  autoPlay
+  loop
+  muted
+/>
 
 ## The problem I wanted to solve
 
 Most mental wellness apps are asynchronous: you write something, an AI responds, you close the tab. That model works, but it misses the feeling of being heard by another person in realtime.
+
+<MediaContainer src="/bloom.png" alt="Bloom, the Talk screen" fit="contain" />
 
 A 10 question check in scores mood from 0 to 50 and maps it to one of four emotion tags (happy, calm, stressed, anxious), and that tag decides who you talk to. The AI therapist, journaling, and mood tracking are there too, but the interesting engineering problem is the video matching, so that is what this post is about.
 
@@ -27,7 +35,7 @@ I wanted to run the web app on Vercel: serverless, zero ops, instant deploys. Bu
 
 So I split into two independent services: a stateless Next.js app (Vercel) for auth, API routes, and AI chat, and a persistent Node process (Render) for all WebSocket traffic. They share nothing except a Postgres user ID passed from the browser.
 
-<MediaContainer src="/bloom-dark-sd.png" alt="Bloom system design: emotion queues, matching, and the two service split" />
+<MediaContainer src="/bloom-dark-sd.png" alt="Bloom system design: emotion queues, matching, and the two service split" fit="contain" />
 
 ## How matching works
 
