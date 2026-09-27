@@ -1,18 +1,5 @@
 import { Icons } from "@/components/icons";
 import { HomeIcon, NotebookIcon } from "lucide-react";
-import { ReactLight } from "@/components/ui/svgs/reactLight";
-import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
-import { Typescript } from "@/components/ui/svgs/typescript";
-import { Nodejs } from "@/components/ui/svgs/nodejs";
-import { Postgresql } from "@/components/ui/svgs/postgresql";
-import { Docker } from "@/components/ui/svgs/docker";
-import { Csharp } from "@/components/ui/svgs/csharp";
-import { MongoDB } from "@/components/ui/svgs/mongodb";
-import { Prisma } from "@/components/ui/svgs/prisma";
-import { SocketIO } from "@/components/ui/svgs/socketio";
-import { Redis } from "@/components/ui/svgs/redis";
-import { Tailwind } from "@/components/ui/svgs/tailwind";
-import { Zustand } from "@/components/ui/svgs/zustand";
 
 export const DATA = {
   name: "Aditya Kumar Singh",
@@ -23,22 +10,69 @@ export const DATA = {
   description:
     "Full Stack Developer · AI · Building things that matter.",
   summary:
-    "I'm a Full Stack Developer building products at the intersection of AI and the web. I've shipped projects ranging from social platforms to campus marketplaces to scam detection tools. Currently interning at the National Informatics Centre. I care about shipping fast and building things that actually matter.",
+    "I'm a Full Stack Developer building products at the intersection of AI and the web. I've shipped projects ranging from social platforms to campus marketplaces to scam detection tools. Currently interning at Jarurat Care Foundation. I care about shipping fast and building things that actually matter.",
   avatarUrl: "/profile-portfolio.jpg",
   skills: [
-    { name: "React", icon: ReactLight },
-    { name: "Next.js", icon: NextjsIconDark },
-    { name: "TypeScript", icon: Typescript },
-    { name: "Node.js", icon: Nodejs },
-    { name: "PostgreSQL", icon: Postgresql },
-    { name: "Docker", icon: Docker },
-    { name: "C++", icon: Csharp },
-    { name: "MongoDB", icon: MongoDB },
-    { name: "Prisma", icon: Prisma },
-    { name: "Socket.IO", icon: SocketIO },
-    { name: "Redis", icon: Redis },
-    { name: "TailwindCSS", icon: Tailwind },
-    { name: "Zustand", icon: Zustand },
+    {
+      category: "Languages",
+      items: ["Python", "TypeScript", "JavaScript", "SQL", "C++", "C"],
+    },
+    {
+      category: "AI & ML",
+      items: [
+        "LangGraph",
+        "LangChain",
+        "RAG (Retrieval-Augmented Generation)",
+        "Vector Search (Chroma)",
+        "Embeddings",
+        "LLM Evaluation & Benchmarking",
+        "Prompt Engineering",
+        "Gemini API",
+        "TensorFlow.js",
+        "On-device Inference",
+      ],
+    },
+    {
+      category: "Backend & APIs",
+      items: [
+        "FastAPI",
+        "Node.js",
+        "Socket.IO",
+        "REST",
+        "Server-Sent Events (SSE)",
+        "Prisma",
+        "Better Auth",
+      ],
+    },
+    {
+      category: "Databases",
+      items: ["PostgreSQL", "MongoDB", "Redis", "Supabase", "Chroma"],
+    },
+    {
+      category: "Frontend",
+      items: [
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "Zustand",
+        "TanStack Query",
+        "Framer Motion",
+        "Web Extension Framework",
+      ],
+    },
+    {
+      category: "Tools & DevOps",
+      items: [
+        "AWS (EC2, Amazon SES)",
+        "Docker",
+        "Git",
+        "GitHub Actions",
+        "Postman",
+        "Bash",
+        "Vercel",
+        "Render",
+      ],
+    },
   ],
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
@@ -92,17 +126,10 @@ export const DATA = {
       start: "July 2026",
       end: undefined,
       description: "",
-    },
-    {
-      company: "National Informatics Centre",
-      href: "https://nic.in",
-      badges: [],
-      location: "Remote",
-      title: "Backend Development Intern",
-      logoUrl: "/NIC.png",
-      start: "May 2026",
-      end: "June 2026",
-      description: "",
+      details: [
+        "Engineered an AI-assisted healthcare support portal (Next.js, Supabase) with Zod-validated Route Handlers and Gemini AI safety guardrails, securing **3 critical patient workflows**.",
+        "Provisioned and configured an independent transactional email microservice on an AWS EC2 instance, integrating Amazon SES to offload automated patient notifications and ensure high-volume deliverability.",
+      ],
     },
   ],
   education: [

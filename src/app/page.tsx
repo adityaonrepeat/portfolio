@@ -112,27 +112,43 @@ export default function Page() {
           </div>
         </div>
       </section>
+      <section id="projects">
+        <BlurFade delay={BLUR_FADE_DELAY * 11}>
+          <ProjectsSection />
+        </BlurFade>
+      </section>
       <section id="skills">
-        <div className="flex min-h-0 flex-col gap-y-3">
-          <BlurFade delay={BLUR_FADE_DELAY * 9}>
-            <h2 className="text-xl font-bold">Skills</h2>
+        <div className="flex min-h-0 flex-col gap-y-4">
+          <BlurFade delay={BLUR_FADE_DELAY * 12}>
+            <h2 className="text-xl font-bold">Technical Skills</h2>
           </BlurFade>
-          <div className="flex flex-wrap gap-2">
-            {DATA.skills.map((skill, id) => (
-              <BlurFade key={skill.name} delay={BLUR_FADE_DELAY * 10 + id * 0.05}>
-                <div className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
-                  {skill.icon && <skill.icon className="size-4 rounded overflow-hidden object-contain" />}
-                  <span className="text-foreground text-sm font-medium">{skill.name}</span>
+          <div className="flex flex-col gap-y-3">
+            {DATA.skills.map((group, groupId) => (
+              <BlurFade
+                key={group.category}
+                delay={BLUR_FADE_DELAY * 13 + groupId * 0.05}
+              >
+                <div className="flex flex-col gap-y-1.5 sm:flex-row sm:gap-x-2">
+                  <span className="shrink-0 text-sm font-semibold text-foreground sm:w-40">
+                    {group.category}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {group.items.map((item) => (
+                      <div
+                        key={item}
+                        className="border bg-background border-border ring-2 ring-border/20 rounded-lg h-7 w-fit px-2.5 flex items-center"
+                      >
+                        <span className="text-foreground text-xs font-medium">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </BlurFade>
             ))}
           </div>
         </div>
-      </section>
-      <section id="projects">
-        <BlurFade delay={BLUR_FADE_DELAY * 11}>
-          <ProjectsSection />
-        </BlurFade>
       </section>
       <section id="contact">
         <BlurFade delay={BLUR_FADE_DELAY * 16}>
