@@ -127,8 +127,11 @@ export const DATA = {
       end: undefined,
       description: "",
       details: [
-        "Engineered an AI-assisted healthcare support portal (Next.js, Supabase) with Zod-validated Route Handlers and Gemini AI safety guardrails, securing **3 critical patient workflows**.",
-        "Provisioned and configured an independent transactional email microservice on an AWS EC2 instance, integrating Amazon SES to offload automated patient notifications and ensure high-volume deliverability.",
+        "Migrated email infrastructure from Bouncify to AWS SES, removing a recurring subscription cost, with an SNS pipeline handling bounces, complaints and unsubscribes.",
+        "Secured the SES/SNS webhook with AWS signature verification, so only genuine AWS notifications can update the email suppression list.",
+        "Built a Python scraper that collects healthcare-professional contacts into CSV exports for outbound email campaigns.",
+        "Added a Gemini healthcare chatbot to the patient portal with server-side guardrails and safety-constrained prompts.",
+        "Built an AI-assisted healthcare portal (Next.js, TypeScript, Supabase) with Zod-validated route handlers, supporting **3 critical patient workflows** in production.",
       ],
     },
   ],
