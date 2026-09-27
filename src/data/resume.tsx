@@ -156,9 +156,9 @@ export const DATA = {
       ],
       image: "/bloom.png",
       video:
-        "https://res.cloudinary.com/wgf97tnb/video/upload/w_640,q_auto,f_auto/v1783637201/bloom_cloudinary_1_gg6xvh.mp4",
+        "https://t2ztnal13cv4hlkn.public.blob.vercel-storage.com/Bloom-Demo_Preview.mp4",
       demoVideo:
-        "https://res.cloudinary.com/wgf97tnb/video/upload/v1783637201/bloom_cloudinary_1_gg6xvh.mp4",
+        "https://t2ztnal13cv4hlkn.public.blob.vercel-storage.com/Bloom-Demo_Preview.mp4",
       systemDesign: "bloom",
     },
     {
@@ -199,9 +199,9 @@ export const DATA = {
       ],
       image: "/campuskart-banner.png",
       video:
-        "https://res.cloudinary.com/wgf97tnb/video/upload/w_640,q_auto,f_auto/v1783637538/campuskart_cloudinary_2_ljym91.mp4",
+        "https://t2ztnal13cv4hlkn.public.blob.vercel-storage.com/Campuskart-Demo_Preview.mp4",
       demoVideo:
-        "https://res.cloudinary.com/wgf97tnb/video/upload/v1783637538/campuskart_cloudinary_2_ljym91.mp4",
+        "https://t2ztnal13cv4hlkn.public.blob.vercel-storage.com/Campuskart-Demo_Preview.mp4",
       systemDesign: "campuskart",
     },
     {
@@ -236,9 +236,9 @@ export const DATA = {
       ],
       image: "/scamshield.png",
       video:
-        "https://res.cloudinary.com/wgf97tnb/video/upload/w_640,q_auto,f_auto/v1783637612/Scamshield_Final_Demo_a4mkws.mp4",
+        "https://t2ztnal13cv4hlkn.public.blob.vercel-storage.com/ScamShield-Demo_Preview.mp4",
       demoVideo:
-        "https://res.cloudinary.com/wgf97tnb/video/upload/v1783637612/Scamshield_Final_Demo_a4mkws.mp4",
+        "https://t2ztnal13cv4hlkn.public.blob.vercel-storage.com/ScamShield-Demo_Preview.mp4",
       systemDesign: "scamshield",
     },
   ],

@@ -69,6 +69,13 @@ function ProjectVideo({ src, poster }: { src: string; poster?: string }) {
   );
 }
 
+function getYouTubeId(url: string) {
+  const match = url.match(
+    /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/))([\w-]{11})/
+  );
+  return match?.[1];
+}
+
 interface Props {
   title: string;
   href?: string;
@@ -332,14 +339,25 @@ export function ProjectCard({
         >
           <X className="h-4 w-4" />
         </button>
-        <video
-          src={demoVideo}
-          controls
-          autoPlay
-          playsInline
-          className="max-h-[90vh] w-auto max-w-full rounded-lg"
-          onClick={(e) => e.stopPropagation()}
-        />
+        {getYouTubeId(demoVideo) ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${getYouTubeId(demoVideo)}?autoplay=1&rel=0`}
+            title={`${title} demo`}
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+            className="aspect-video w-[min(100%,calc(90vh*16/9))] rounded-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+        ) : (
+          <video
+            src={demoVideo}
+            controls
+            autoPlay
+            playsInline
+            className="max-h-[90vh] w-auto max-w-full rounded-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+        )}
       </div>,
       document.body
     )}
